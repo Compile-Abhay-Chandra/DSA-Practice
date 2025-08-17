@@ -27,6 +27,7 @@ Node* Binary_Tree(){
     temp->left = Binary_Tree();
     cout<<"Enter the right child of "<<x<<": ";
     temp->right = Binary_Tree();
+    return temp;
 }
 
 void Pre_Order_Traversal(Node* root){

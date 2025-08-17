@@ -1,7 +1,6 @@
 #include<iostream>
 #include<stack>
 #include<vector>
-#include<algorithm>
 using namespace std;
 
 class Node{
@@ -29,30 +28,41 @@ Node* Binary_Tree(){
     return temp;
 }
 
-void Post_Order_Traversal(Node* root){
-    stack<Node*>s;
+void In_Order_Traversal(Node* root){
+    if(root == NULL) cout<<"Empty Tree";
+    stack<Node*> s;
+    stack<bool> visited;
     vector<int>v;
     s.push(root);
+    visited.push(0);
     while(!s.empty()){
         Node* temp = s.top();
+        bool flag = visited.top();
         s.pop();
-        v.push_back(temp->val);
-        if(temp->left){
-            s.push(temp->left);
-        }
-        if(temp->right){
-            s.push(temp->right);
+        visited.pop();
+        if(!flag){
+            if(temp->right){
+                s.push(temp->right);
+                visited.push(0);
+            }
+            s.push(temp);
+            visited.push(1);
+            if(temp->left){
+                s.push(temp->left);
+                visited.push(0);
+            }
+        }else{
+            v.push_back(temp->val);
         }
     }
-    reverse(v.begin(),v.end());
     for(auto it : v){
-        cout<<it<<" ";
+        cout<<it<<' ';
     }
 }
 
 int main(){
     cout<<"Enter the root node: ";
     Node* root = Binary_Tree();
-    Post_Order_Traversal(root);
+    In_Order_Traversal(root);
     return 0;
 }
